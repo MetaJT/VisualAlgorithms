@@ -9,7 +9,7 @@ class DrawInfo:
     GREY = 128, 128, 128
     BACKGROUND_COLOR = WHITE
 
-    def __init__(self,WIDTH,HEIGHT,N=50, COLOR=GREY,DELAY=80,PAUSED=False):
+    def __init__(self,WIDTH,HEIGHT,ALGO=None,N=50, COLOR=GREY,DELAY=80,PAUSED=False):
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
         self.n = N
@@ -17,6 +17,7 @@ class DrawInfo:
         self.paused = PAUSED
         self.lst = generateList(N, HEIGHT)
         self.delay = DELAY
+        self.algo = ALGO
 
         self.window = pygame.display.set_mode((WIDTH,HEIGHT))
         pygame.display.set_caption("Sorting Algos")
@@ -28,13 +29,14 @@ def generateList(n, height):
         lst.append(rand)
     return lst
 
-def draw(draw_info, swap1, swap2=0):
+def draw(draw_info, swap1=-1, swap2=0):
     draw_info.window.fill(draw_info.BACKGROUND_COLOR)
     drawList(draw_info, swap1, swap2)
     pygame.display.update()
 
 def drawList(draw_info, swap1, swap2=0):
     lst = draw_info.lst
+    delay = draw_info.delay
     size = len(lst)
     blockW = draw_info.WIDTH / size
 

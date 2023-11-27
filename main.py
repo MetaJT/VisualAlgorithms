@@ -8,11 +8,23 @@ def main():
     n = 8
     WIDTH, HEIGHT = 800, 600
     draw_info = DrawInfo(WIDTH, HEIGHT)
-    pause = True
+    draw_info.algo = insertionSort
+    sortingAlgoGenerator = None
+    sorting = False
     CLOCK = pygame.time.Clock()
+    tick = 25
 
     while running:
-        CLOCK.tick(60)
+        CLOCK.tick(tick)
+
+        if sorting:
+            try:
+                next(sortingAlgoGenerator)
+            except StopIteration:
+                sorting = False
+        else:
+            draw(draw_info)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -23,42 +35,31 @@ def main():
                     h = draw_info.HEIGHT
                     draw_info.lst = generateList(n, h)
 
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_UP and not sorting:
                     draw_info.n += 1
                     n = draw_info.n
-                    h = h = draw_info.HEIGHT
-                    draw_info.lst = generateList(n, h)
+                    h = draw_info.HEIGHT
+                    draw_info.lst.append(generateList(n, h)[-1])
 
-                if event.key == pygame.K_DOWN:
+                if event.key == pygame.K_DOWN and not sorting:
                     if draw_info.n == 5:
                         draw_info.n = 5
                         # Make note that min sorting values has been reached
                     else:
                         draw_info.n -= 1
-                    
-                    n = draw_info.n
-                    h = h = draw_info.HEIGHT
-                    draw_info.lst = generateList(n, h)
-                
-                if event.key == pygame.K_LEFT:
-                    if draw_info.delay == 10:
-                        draw_info.delay = 10
-                    else:
-                        draw_info.delay -= 1
+                        draw_info.lst.pop()
 
                 if event.key == pygame.K_RIGHT:
-                    if draw_info.delay == 100:
-                        draw_info.delay = 100
-                    else:
-                        draw_info.delay += 1
+                    tick += 5
+
+                if event.key == pygame.K_LEFT:
+                    tick -= 5
 
                 if event.key == pygame.K_SPACE:
-                    if not draw_info.paused:
-                        draw_info.paused = True
-                    else:
-                        draw_info.paused = False
+                    sorting = not sorting
+                    sortingAlgoGenerator = draw_info.algo(draw_info)
 
-        insertionSort(draw_info)
+        #insertionSort(draw_info)
         #draw(draw_info)
 
     pygame.display.update()
@@ -67,11 +68,3 @@ pygame.QUIT
 
 if __name__ == "__main__":
     main()
-
-
-    # for i in range(n):
-    #     for j in range(n - i - 1):
-    #         if rects[j][3] > rects[j + 1][3]:
-    #             rects[j][3], rects[j + 1][3] = rects[j + 1][3], rects[j][3]
-    #             print(rects)
-    #             update(rects)

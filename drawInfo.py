@@ -7,19 +7,18 @@ class DrawInfo:
     GREEN = 0, 255, 0
     RED = 255, 0, 0
     GREY = 128, 128, 128
-    BACKGROUND_COLOR = WHITE
+    BACKGROUND_COLOR = BLACK
 
-    def __init__(self,WIDTH,HEIGHT,ALGO=None,N=50, COLOR=GREY,DELAY=80,PAUSED=False):
-        self.WIDTH = WIDTH
-        self.HEIGHT = HEIGHT
+    def __init__(self,WIDTH,HEIGHT,ALGO=None,N=50, COLOR=GREY,PAUSED=False):
+        self.width = WIDTH
+        self.height = HEIGHT
         self.n = N
         self.color = COLOR
-        self.paused = PAUSED
         self.lst = generateList(N, HEIGHT)
-        self.delay = DELAY
         self.algo = ALGO
 
-        self.window = pygame.display.set_mode((WIDTH,HEIGHT))
+        self.window = pygame.display.set_mode([WIDTH,HEIGHT])
+        self.surface = pygame.Surface((WIDTH,HEIGHT), pygame.SRCALPHA)
         pygame.display.set_caption("Sorting Algos")
 
 def generateList(n, height):
@@ -30,19 +29,17 @@ def generateList(n, height):
     return lst
 
 def draw(draw_info, swap1=-1, swap2=0):
-    draw_info.window.fill(draw_info.BACKGROUND_COLOR)
+    draw_info.window.fill(draw_info.BACKGROUND_COLOR) # clear the screen
     drawList(draw_info, swap1, swap2)
-    pygame.display.update()
 
 def drawList(draw_info, swap1, swap2=0):
     lst = draw_info.lst
-    delay = draw_info.delay
     size = len(lst)
-    blockW = draw_info.WIDTH / size
+    blockW = draw_info.width / size
 
     for i, value in enumerate(lst):
         x  = i * blockW
-        y = draw_info.HEIGHT - value
+        y = draw_info.height - value
 
         if i == swap1:
             color = draw_info.GREEN

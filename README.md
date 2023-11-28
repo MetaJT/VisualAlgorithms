@@ -1,5 +1,5 @@
 # VisualAlgorithms
-Visual representation of different sorting algorithsm [Only Insertion Sort for now]
+Visual representation of different sorting algorithms [Only Insertion Sort for now]
 
 Buttons:
 - [P] = Pause

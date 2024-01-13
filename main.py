@@ -11,29 +11,31 @@ def main():
 
     draw_info = DrawInfo(WIDTH, HEIGHT)
 
-    draw_info.algo = insertionSort
+    draw_info.algo = bubbleSort
     sortingAlgoGenerator = None
     sorting = False
-    paused = False # Need to set to true
+    paused = False # Need to set to true to start
     CLOCK = pygame.time.Clock()
-    tick = 25
+    draw_info.tick = 10
     count = 0
     pauseMenu = Button(draw_info)
 
     while running:
+        tick = draw_info.tick
         CLOCK.tick(tick)
 
         if sorting and not paused:
             try:
-                 next(sortingAlgoGenerator)
+                next(sortingAlgoGenerator)
             except StopIteration:
                 sorting = False
+
         elif not sorting and not paused:
             draw(draw_info)
-        elif paused and count != 1 :
+
+        elif paused and count != 1:
             pauseMenu.drawPausedMenu(draw_info)
             count = 1
-
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -60,25 +62,38 @@ def main():
                         draw_info.lst.pop()
 
                 if event.key == pygame.K_UP:
-                    tick += 5
+                    draw_info.tick += 5
 
                 if event.key == pygame.K_DOWN:
                     if tick == 5:
-                        tick = 5
+                        draw_info.tick = 5
                     else:
-                        tick -= 5
+                        draw_info.tick -= 5
 
                 if event.key == pygame.K_SPACE:
-                    sorting = not sorting
-                    sortingAlgoGenerator = draw_info.algo(draw_info)
+                    if not sorting:
+                        sorting = True
+                    else:
+                        sorting = not sorting
+                    paused = False
                 
                 if event.key == pygame.K_p:
                     if count == 1:
                         count = 0
                     paused = not paused
                     sorting = True
-                    sortingAlgoGenerator = draw_info.algo(draw_info)
 
+                if paused:
+                    draw(draw_info)
+                    pauseMenu.drawPausedMenu(draw_info)
+
+                if event.key == pygame.K_b:
+                    sortingAlgoGenerator = draw_info.algo(draw_info)
+                
+                if event.key == pygame.K_i:
+                    sortingAlgoGenerator = draw_info.algo(draw_info)
+                
+                sortingAlgoGenerator = draw_info.algo(draw_info)
         pygame.display.update()
 
 pygame.QUIT

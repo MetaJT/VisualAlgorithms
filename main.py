@@ -11,7 +11,8 @@ def main():
 
     draw_info = DrawInfo(WIDTH, HEIGHT)
 
-    draw_info.algo = bubbleSort
+    draw_info.algo = mergeSort
+    draw_info.algorithm = "MERGE SORT"
     sortingAlgoGenerator = None
     sorting = False
     paused = False # Need to set to true to start
@@ -88,10 +89,16 @@ def main():
                     pauseMenu.drawPausedMenu(draw_info)
 
                 if event.key == pygame.K_b:
-                    sortingAlgoGenerator = draw_info.algo(draw_info)
+                    draw_info.algo = bubbleSort
+                    draw_info.algorithm = "BUBBLE SORT"
                 
                 if event.key == pygame.K_i:
-                    sortingAlgoGenerator = draw_info.algo(draw_info)
+                    draw_info.algo = insertionSort
+                    draw_info.algorithm = "INSERTION SORT"
+
+                if event.key == pygame.K_q:
+                    draw_info.algo = quickSort
+                    draw_info.algorithm = "QUICK SORT"
                 
                 sortingAlgoGenerator = draw_info.algo(draw_info)
         pygame.display.update()

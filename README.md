@@ -9,3 +9,6 @@ Buttons:
 - [DOWN] = Slow do sort
 - [RIGHT] = Increase items to sort
 - [LEFT] = Decrease items to sort
+- [B] = Bubble Sort
+
+

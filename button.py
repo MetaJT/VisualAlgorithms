@@ -9,8 +9,8 @@ class Button:
         self.msg = pygame.font.SysFont('arielblack', 70)
 
     def drawPausedMenu(self, draw_info):
-        
-        text = self.msg.render('Paused', False, (0, 0, 0))
+
+        text = self.msg.render('Paused', True, (0, 0, 0))
         pygame.draw.rect(draw_info.surface, (128, 128, 128, 150), [0, 0, draw_info.width, draw_info.height])
         draw_info.window.blit(draw_info.surface, (0, 0))
         draw_info.window.blit(text, (draw_info.width//2 - 90, draw_info.height//2 - 30))

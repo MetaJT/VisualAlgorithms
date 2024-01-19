@@ -2,7 +2,6 @@ from drawInfo import *
 
 # Insertion Sort
 def insertionSort(draw_info):
-    draw_info.algorithm = "INSERTION SORT"
     lst = draw_info.lst
     n = len(lst)
 
@@ -17,7 +16,6 @@ def insertionSort(draw_info):
 
 # Bubble Sort
 def bubbleSort(draw_info):
-    # draw_info.algorithm = "BUBBLE SORT"
     lst = draw_info.lst
     n = len(lst)
     swapped = False
@@ -34,7 +32,6 @@ def bubbleSort(draw_info):
 
 # Quick Sort
 def quickSort(draw_info):
-    # draw_info.algorithm = "QUICK SORT"
     lst = draw_info.lst
     n = len(lst)
     stack = [(0, n - 1)]
@@ -68,7 +65,6 @@ def quickSort(draw_info):
 
 # Merge Sort
 def mergeSort(draw_info):
-    # draw_info.algorithm = "MERGE SORT"
     lst = draw_info.lst
     stack = [(0, len(lst) - 1)]
 
@@ -115,3 +111,6 @@ def mergeSort(draw_info):
                 j += 1
                 k += 1
     return lst
+
+DEFAULT_ALGO = bubbleSort
+DEFAULT_ALGO_TEXT = "BUBBLE SORT"

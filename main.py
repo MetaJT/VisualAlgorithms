@@ -11,8 +11,8 @@ def main():
 
     draw_info = DrawInfo(WIDTH, HEIGHT)
 
-    draw_info.algo = mergeSort
-    draw_info.algorithm = "MERGE SORT"
+    draw_info.algo = DEFAULT_ALGO # From algorithms.py
+    draw_info.algorithm = DEFAULT_ALGO_TEXT # From algorithms.py
     sortingAlgoGenerator = None
     sorting = False
     paused = False # Need to set to true to start
@@ -47,6 +47,8 @@ def main():
                     n = draw_info.n
                     h = draw_info.height
                     draw_info.lst = generateList(n, h)
+                if event.key == pygame.K_d: # Descending sort
+                    draw_info.descending = not draw_info.descending
 
                 if event.key == pygame.K_RIGHT and (not sorting or paused): 
                     draw_info.n += 1
@@ -72,17 +74,17 @@ def main():
                         draw_info.tick -= 5
 
                 if event.key == pygame.K_SPACE:
-                    if not sorting:
+                    if not sorting or paused:
                         sorting = True
                     else:
                         sorting = not sorting
-                    paused = False
+                    # paused = False
                 
                 if event.key == pygame.K_p:
                     if count == 1:
                         count = 0
                     paused = not paused
-                    sorting = True
+                    # sorting = 
 
                 if paused:
                     draw(draw_info)
@@ -99,6 +101,10 @@ def main():
                 if event.key == pygame.K_q:
                     draw_info.algo = quickSort
                     draw_info.algorithm = "QUICK SORT"
+                
+                if event.key == pygame.K_m:
+                    draw_info.algo = quickSort
+                    draw_info.algorithm = "MERGE SORT"
                 
                 sortingAlgoGenerator = draw_info.algo(draw_info)
         pygame.display.update()

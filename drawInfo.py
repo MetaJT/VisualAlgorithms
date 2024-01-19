@@ -1,6 +1,7 @@
 import random
 import pygame
 from button import *
+
 pygame.font.init()
 
 class DrawInfo:
@@ -13,7 +14,7 @@ class DrawInfo:
     
     FONT = pygame.font.SysFont('arielblack', 30)
 
-    def __init__(self,WIDTH,HEIGHT,ALGO=None,N=20,COLOR=GREY,SPEED=10,ALGORITHM=None):
+    def __init__(self,WIDTH,HEIGHT,ALGO=None,N=20,COLOR=GREY,SPEED=10,ALGORITHM=None,DESCENDING=False):
         self.width = WIDTH
         self.height = HEIGHT
         self.n = N
@@ -22,6 +23,7 @@ class DrawInfo:
         self.algo = ALGO
         self.tick = SPEED
         self.algorithm = ALGORITHM
+        self.descending = DESCENDING
 
         self.window = pygame.display.set_mode([WIDTH,HEIGHT])
         self.surface = pygame.Surface((WIDTH,HEIGHT), pygame.SRCALPHA)
@@ -30,7 +32,7 @@ class DrawInfo:
 def generateList(n, height):
     lst = []
     for _ in range(n):
-        rand = random.randrange(height - 50)
+        rand = random.randrange(height - 100)
         lst.append(rand)
     return lst
 
@@ -40,7 +42,7 @@ def draw(draw_info, swap1=-1, swap2=0):
     controls = draw_info.FONT.render("P - PAUSE  |  R - RANDOMIZE  |  UP - SPEED UP  |  DOWN - SLOW DOWN", True, draw_info.WHITE)
     draw_info.window.blit(controls, (draw_info.width/2 - controls.get_width()/2, 10))
 
-    sortInfo = draw_info.FONT.render("ALGORITHM: " + getAlgorithm(draw_info), True, draw_info.WHITE)
+    sortInfo = draw_info.FONT.render("ALGORITHM: " + draw_info.algorithm + "  |  SPEED: " + str(draw_info.tick) + "  |  DESCENDING: " + str(draw_info.descending).upper(), True, draw_info.WHITE)
     draw_info.window.blit(sortInfo, (draw_info.width/2 - controls.get_width()/2, 40))
 
     drawList(draw_info, swap1, swap2)
@@ -62,9 +64,3 @@ def drawList(draw_info, swap1, swap2=0):
             color = draw_info.GREY
 
         pygame.draw.rect(draw_info.window, color, (x,y, blockW - 1, value))
-
-def setAlgorithm(draw_info):
-    None
-
-def getAlgorithm(draw_info):
-    return str(draw_info.algorithm)
